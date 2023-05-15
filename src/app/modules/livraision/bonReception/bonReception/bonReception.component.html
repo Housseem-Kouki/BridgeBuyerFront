@@ -1,0 +1,37 @@
+<h1> List Bon Reception</h1>
+
+<app-add-bonRetour *ngIf="modalNewBonReception" [modalNewBonRetour]="modalNewBonReception"
+(closeBonReceptionModel)="closeNewBonReceptionModal($event)"></app-add-bonRetour>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>dateReception</th>
+        <th>quantiteRecevoir</th>
+        <th>quantiteAccepte</th>
+        <th>quantiteRefuse</th>
+        <th>etat</th>
+        <th>archive</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody *ngFor="let br of bonReceptions">
+      <tr *ngIf="!br.archive">
+        <td>{{ br.dateReception | date }}</td>
+        <td>{{ br.quantiteRecevoir }}</td>
+        <td>{{ br.quantiteAccepte }}</td>
+        <td>{{ br.quantiteRefuse }}</td>
+        <td>{{ br.etat }}</td>
+        <td>{{ br.archive }}</td>
+        <td>
+
+          <button (click)="deleteBonReception(br.idBonReception)" class="btn btn-danger" style="margin-left: 10px">Delete</button>
+          <button class="btn btn-danger"  (click)="addNewRetour(br.idBonReception)">Ajout BRetour</button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

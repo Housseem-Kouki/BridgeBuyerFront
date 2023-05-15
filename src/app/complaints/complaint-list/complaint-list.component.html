@@ -1,0 +1,48 @@
+<app-sidebar></app-sidebar>
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header bg-primary text-light">
+      <h5 class="modal-title">Complaints List</h5>
+      <button type="button" class="close text-light" data-dismiss="modal">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="py-1">
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>topic</th>
+              <th>complaintDate</th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let c of complaints">
+              <td>{{ c.topic }}</td>
+              <td>{{ c.complaintDate | date }}</td>
+
+              <td>
+                <div class="btn-group" role="group" aria-label="Actions">
+                  <button (click)="deleteComplaint(c.id)" class="btn btn-danger btn-sm">Delete</button>
+                  <button (click)="viewComplaint(c.id)" class="btn btn-primary btn-sm">View</button>
+                  <button (click)="updateComplaint(c.id)" class="btn btn-success btn-sm">Update</button>
+
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="btn-group" role="group" aria-label="Actions">
+          <button (click)="createComplaint()" class="btn btn-primary btn-sm">ajouter reclamation</button>
+
+
+        </div>
+
+      <button (click) = "getNumbrComplaints()" class = "btn btn-primary">nbreTotal</button>
+      <td> {{ nbreTotal }} </td>
+      </div>
+    </div>
+  </div>
+</div>

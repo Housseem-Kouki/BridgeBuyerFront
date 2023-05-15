@@ -1,0 +1,24 @@
+<h1>Liste de livraison des acheteurs</h1>
+
+<div class="container">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Date de livraison</th>
+      <th>Quantité livrée</th>
+      <th>État</th>
+      <!-- Add more headers for other attributes -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let livraison of livraisons">
+      <td>{{ livraison.idLivraison }}</td>
+      <td>{{ livraison.dateLivraison }}</td>
+      <td>{{ livraison.quantiteDelivre }}</td>
+      <td>{{ livraison.etat }}</td>
+      <!-- Add more cells for other attributes -->
+    </tr>
+  </tbody>
+</table>
+</div>

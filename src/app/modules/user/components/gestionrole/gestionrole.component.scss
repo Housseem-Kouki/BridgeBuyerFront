@@ -1,0 +1,69 @@
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+  }
+  
+  td,
+  th {
+    padding: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+    text-align: left;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .tabs-container{
+    background: #eee;
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    height: 55px;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    }
+    
+    .tabs-container .tab-link{
+    width: 33.33%;
+    position: relative;
+    height: 100%;
+    padding: 10px;
+    float: left;
+    text-align: center;
+    }
+    
+    
+    .tab-link::after {
+        position: absolute;
+        left: 4px;
+        right: 4px;
+        bottom: 0;
+        display: block;
+        content: '';
+        border-bottom: 3px solid #18a790;
+        color: #18a790;
+        transform: scaleX(0);
+        transition: transform 250ms ease-in-out;
+      }
+      .tab-link:hover:after {
+        transform: scaleX(1);
+        /* transform-origin: 100% 50%; For Right*/
+        /* transform-origin: 0% 50%; For Left*/
+      }
+    .active::after {
+      transform: scaleX(1);
+    }
+      .active{
+        color: #18a790!important;
+      }

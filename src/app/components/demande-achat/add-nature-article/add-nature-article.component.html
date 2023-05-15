@@ -1,0 +1,54 @@
+<div class="card rounded-0">
+  <div class="card-header rounded-0">Ajouter nature article</div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="my-3">
+        <label class="form-label" for="name">Nom</label>
+        <input
+          class="form-control"
+          id="name"
+          formControlName="nomanature"
+          placeholder="nom nature"
+        />
+        <div
+          *ngIf="
+            form.controls.nomanature.errors?.required &&
+            form.controls.nomanature.touched
+          "
+          class="text-danger text-xs mt-2"
+        >
+          Name is required
+        </div>
+      </div>
+      <div class="my-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          rows="4"
+          class="form-control"
+          id="description"
+          formControlName="descriptionnature"
+          placeholder="Description "
+        ></textarea>
+        <div
+          *ngIf="
+            form.controls.descriptionnature.errors?.required &&
+            form.controls.descriptionnature.touched
+          "
+          class="text-danger text-xs mt-2"
+        >
+          Description is required
+        </div>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="btn btn-primary w-full"
+          [disabled]="!form.valid"
+        >
+          Ajouter
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

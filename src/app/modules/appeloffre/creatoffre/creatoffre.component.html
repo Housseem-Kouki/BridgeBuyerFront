@@ -1,0 +1,25 @@
+<p>creatoffre works!</p>
+
+<div class="modal-body">
+  <!-- Formulaire d'ajout -->
+  <form >
+    <div class="form-group">
+      <label>Date de réception</label>
+      <input type="date" class="form-control" [(ngModel)]="offre.datecreationO" name="datecreationO" required>
+    </div>
+    <div class="form-group">
+      <label>date Validation</label>
+      <input type="date" class="form-control" [(ngModel)]="offre.dateValidation" name="dateValidation" required>
+    </div>
+    <div class="form-group">
+      <label>commentaire</label>
+      <input type="text" class="form-control" [(ngModel)]="offre.commentaire" name="commentaire" required>
+    </div>
+
+
+    <!--button type="button" class="btn btn-primary" (click)="addBonReception(bonReception)">Enregistrer</-button>-->
+    <button class="btn btn-success" (click)="add(offre, idDevisFourniseur)">Submit</button>
+
+  </form>
+</div>
+

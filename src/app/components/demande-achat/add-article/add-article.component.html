@@ -1,0 +1,119 @@
+<div class="card rounded-0">
+  <div class="card-header rounded-0">Ajouter nature article</div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="w-full row">
+      <div class="my-3 col-md-6">
+        <label class="form-label" for="nomarticle">Nom</label>
+        <input
+          class="form-control"
+          id="nomarticle"
+          formControlName="nomarticle"
+          placeholder="nom article"
+        />
+        <div
+          *ngIf="
+            form.controls.nomarticle.errors?.required &&
+            form.controls.nomarticle.touched
+          "
+          class="text-danger text-xs mt-2"
+        >
+          Name is required
+        </div>
+      </div>
+      <div class="my-3 col-md-3">
+        <label class="form-label" for="prixestime">Prix</label>
+        <input
+          type="number"
+          class="form-control"
+          id="prixestime"
+          formControlName="prixestime"
+          placeholder="Prix"
+        />
+        <div
+          *ngIf="
+            form.controls.prixestime.errors?.required &&
+            form.controls.prixestime.touched
+          "
+          class="text-danger text-xs mt-2"
+        >
+          Prix is required
+        </div>
+      </div>
+      <div class="my-3 col-md-3">
+        <label class="form-label" for="quantite">Quantite</label>
+        <input
+          type="number"
+          class="form-control"
+          id="quantite"
+          formControlName="quantite"
+          placeholder="Quantite"
+        />
+        <div
+          *ngIf="
+            form.controls.quantite.errors?.required &&
+            form.controls.quantite.touched
+          "
+          class="text-danger text-xs mt-2"
+        >
+          quantite is required
+        </div>
+      </div>
+      <div class="my-3 col-md-6">
+        <label class="form-label" for="idnaturearticle">Nature Article</label>
+        <select
+          class="form-select text-black py-2"
+          id="idnaturearticle"
+          formControlName="idnaturearticle"
+        >
+          <option
+            *ngFor="let nature of natureArticles"
+            [value]="nature.idnaturearticle"
+          >
+            {{ nature.nomanature }}
+          </option>
+        </select>
+      </div>
+      <div class="my-3 col-md-6">
+        <label class="form-label" for="idunitearticle">Unite Article</label>
+        <select
+          class="form-select text-black py-2"
+          id="idunitearticle"
+          formControlName="idunitearticle"
+        >
+          <option *ngFor="let unite of unites" [value]="unite.idunitearticle">
+            {{ unite.nomunite }}
+          </option>
+        </select>
+      </div>
+      <div class="my-3">
+        <label class="form-label" for="descriptionarticle">Description</label>
+        <textarea
+          rows="4"
+          class="form-control"
+          id="descriptionarticle"
+          formControlName="descriptionarticle"
+          placeholder="Description "
+        ></textarea>
+        <div
+          *ngIf="
+            form.controls.descriptionarticle.errors?.required &&
+            form.controls.descriptionarticle.touched
+          "
+          class="text-danger text-xs mt-2"
+        >
+          Description is required
+        </div>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="btn btn-primary w-full"
+          [disabled]="!form.valid"
+        >
+          Ajouter
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

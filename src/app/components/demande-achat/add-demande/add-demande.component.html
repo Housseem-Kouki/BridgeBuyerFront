@@ -1,0 +1,194 @@
+<div class="container py-6">
+  <div class="row justify-content-center mb-4">
+    <div class="col-auto">
+      <div
+        class="circle-step d-flex align-items-center justify-content-center"
+        [ngClass]="{ 'circle-step-active': currentStep === 1 }"
+      >
+        1
+      </div>
+    </div>
+    <div class="col-auto d-flex align-items-center">
+      <div
+        class="step-line"
+        [ngClass]="{ 'step-line-active': currentStep === 2 }"
+      ></div>
+    </div>
+    <div class="col-auto">
+      <div
+        class="circle-step d-flex align-items-center justify-content-center"
+        [ngClass]="{ 'circle-step-active': currentStep === 2 }"
+      >
+        2
+      </div>
+    </div>
+    <div class="col-auto d-flex align-items-center">
+      <div
+        class="step-line"
+        [ngClass]="{ 'step-line-active': currentStep === 3 }"
+      ></div>
+    </div>
+    <div class="col-auto">
+      <div
+        class="circle-step d-flex align-items-center justify-content-center"
+        [ngClass]="{ 'circle-step-active': currentStep === 3 }"
+      >
+        3
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="w-full row">
+          <div *ngIf="currentStep === 1" class="row">
+            <div class="form-group col-md-6">
+              <label for="etatdemandeachat">Etat de la demande d'achat</label>
+              <input
+                placeholder="Etat de la demande d'achat"
+                type="number"
+                class="form-control"
+                id="etatdemandeachat"
+                formControlName="etatdemandeachat"
+              />
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="budget">Budget</label>
+              <input
+                placeholder="Budget"
+                type="number"
+                class="form-control"
+                id="budget"
+                formControlName="budget"
+              />
+            </div>
+          </div>
+
+          <div *ngIf="currentStep === 2" class="row">
+            <div ngbDropdown class="d-inline-block d-flex w-full">
+              <button
+                type="button"
+                (click)="addArticle()"
+                class="btn btn-outline-secondary w-1/2"
+                id="articlesDropdown"
+              >
+                <span>Ajouter un nouvel article</span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary w-1/2"
+                id="articlesDropdown"
+                ngbDropdownToggle
+              >
+                <span>Sélectionner les articles</span
+                ><i class="fas fa-caret-down"></i>
+              </button>
+              <div
+                ngbDropdownMenu
+                aria-labelledby="articlesDropdown"
+                class="w-100"
+                style="max-height: 300px; overflow-y: auto"
+              >
+                <div class="table-responsive">
+                  <table class="table table-sm table-striped">
+                    <thead>
+                      <tr>
+                        <th>Select</th>
+                        <th>Name</th>
+                        <th>Prix</th>
+                        <th>Quantite</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let article of articles">
+                        <td>
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [id]="article.idarticle"
+                            [value]="article.idarticle"
+                            [checked]="isSelected(article)"
+                            (change)="
+                              toggleArticleSelection(
+                                article,
+                                $event.target.checked
+                              )
+                            "
+                          />
+                        </td>
+                        <td>
+                          <label [for]="article.idarticle">{{
+                            article.nomarticle
+                          }}</label>
+                        </td>
+                        <td>{{ article.prixestime }}</td>
+                        <td>{{ article.quantite }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="justify-content-center mt-5">
+            <div
+              class="d-flex justify-content-center"
+              *ngIf="currentStep === 1"
+            >
+              <button
+                type="button"
+                [disabled]="currentStep === 1"
+                class="btn btn-secondary me-2"
+                (click)="previousStep()"
+              >
+                Previous
+              </button>
+              <button
+                [disabled]="!form.valid"
+                type="button"
+                class="btn btn-primary ms-2"
+                (click)="nextStep()"
+              >
+                Next
+              </button>
+            </div>
+            <div
+              class="d-flex justify-content-center"
+              *ngIf="currentStep === 2"
+            >
+              <!-- Step 2 form content here -->
+              <button
+                type="button"
+                class="btn btn-secondary me-2"
+                (click)="previousStep()"
+              >
+                Previous
+              </button>
+              <button
+                [disabled]="selectedArticles.length === 0 || !selectedArticles"
+                type="button"
+                class="btn btn-primary ms-2"
+                (click)="nextStep()"
+              >
+                Next
+              </button>
+            </div>
+            <div
+              *ngIf="currentStep === 3"
+              class="d-flex align-items-center justify-content-center mt-5"
+            >
+              <!-- Step 3 form content here -->
+              <button
+                type="button"
+                class="btn btn-secondary me-2"
+                (click)="previousStep()"
+              >
+                Previous
+              </button>
+              <button type="submit" class="btn btn-primary ms-2">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

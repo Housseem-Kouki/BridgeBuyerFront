@@ -1,0 +1,297 @@
+
+
+
+<app-confirmation-dialog></app-confirmation-dialog>
+  <!-- Modal update  Role -->
+  <div  *ngIf="roleForUpdate"   class="modal fade" id="modalupdaterole" tabindex="-1" role="dialog" aria-labelledby="modalupdaterole" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Update Role</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+           
+          </button>
+        </div>
+        <div class="modal-body">
+         <form #formUpdateRole="ngForm" (ngSubmit)="updateRole()">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label" for="exampleInputroleName">Role Name :</label>
+                <input type="text" [(ngModel)]="roleForUpdate.roleName" required name="exampleInputroleName" class="form-control" id="exampleInputroleName" aria-describedby="roleName" >  
+              </div>
+            </div>
+          </div>
+          <div class="container">
+          <div class="row">List Privilege : </div>
+          <div class="row">
+           <div *ngFor="let pup of roleForUpdate.privileges; let i = index;" class="col-4">
+             <div >{{pup.privilegeName}} <i class="fa fa-times" (click)="removePrivilege(pup)"></i></div>
+                <!-- Ajouter un saut de ligne après chaque troisième privilège -->
+                <ng-container *ngIf="(i + 1) % 3 == 0"><br /></ng-container>
+              </div>
+            </div>
+          </div>
+          <div>Add privilege :</div>
+          <div class="container">
+            <div class="row">
+            <div *ngFor="let ppp of privis;let ii = index;" class="col-4">
+          <div *ngIf="!hasPrivilege(ppp)">
+    
+              <div *ngIf="roleForUpdate.roleName === 'fournisseur' && ppp.privilegecategorie === 'privilegeFournisseur'">
+                <label>
+                  <input type="checkbox" (change)="togglePrivilegeSelection(ppp, $event.target.checked)" name="privileges" value="{{ppp.idPrivilege}}"> {{ppp.privilegeName}}&nbsp;
+              </label>
+              </div> 
+              <div *ngIf="roleForUpdate.roleName === 'admin' && ppp.privilegecategorie === 'privilegeAdmin'">
+                <label>
+                  <input type="checkbox" (change)="togglePrivilegeSelection(ppp, $event.target.checked)" name="privileges" value="{{ppp.idPrivilege}}"> {{ppp.privilegeName}}&nbsp;
+              </label>
+              </div> 
+              <div *ngIf="roleForUpdate.roleName === 'acheteur' && ppp.privilegecategorie === 'privilegeAcheteur'">
+                <label>
+                  <input type="checkbox" (change)="togglePrivilegeSelection(ppp, $event.target.checked)" name="privileges" value="{{ppp.idPrivilege}}"> {{ppp.privilegeName}}&nbsp;
+              </label>
+              </div> 
+              <div *ngIf="roleForUpdate.roleName === 'operateur' && ppp.privilegecategorie === 'privilegeOperateur'">               
+                <label>
+                  <input type="checkbox" (change)="togglePrivilegeSelection(ppp, $event.target.checked)" name="privileges" value="{{ppp.idPrivilege}}"> {{ppp.privilegeName}}&nbsp;
+                </label>
+              </div> 
+              <div *ngIf="roleForUpdate.roleName === 'test' && ppp.privilegecategorie === 'privilegeAcheteur'">               
+                <label>
+                  <input type="checkbox" (change)="togglePrivilegeSelection(ppp, $event.target.checked)" name="privileges" value="{{ppp.idPrivilege}}"> {{ppp.privilegeName}}&nbsp;
+                </label>
+              </div> 
+              </div>
+
+            </div>
+          </div>
+          </div>
+          
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<!-- Modal ListPrivilege -->
+<div class="modal fade" id="exampleModalListPrivilege" tabindex="-1" role="dialog" aria-labelledby="exampleModalListPrivilegeTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalListPrivilegeTitle">List Priviléges of this role</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            
+          </button>
+        </div>
+        <div class="modal-body">
+          
+          <div class="container">
+            <div class="row">
+              <div *ngFor="let pr of listprivilegesRole; let i = index;" class="col-sm-5">
+                
+                  <div >{{pr.privilegeName}} <i class="fa fa-times"></i></div>
+                 
+           
+                <!-- Ajouter un saut de ligne après chaque troisième privilège -->
+                <ng-container *ngIf="(i + 1) % 3 == 0"><br /></ng-container>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal ListUsers -->
+<div class="modal fade" id="exampleModalListUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalListUsers" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-center" id="exampleModalLongTitle">List users affected to this role</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+           
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngFor="let ur of listusersRole">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-3">
+                 {{ur.fname}}
+                </div>
+                <div class="col-sm-3">
+                  {{ur.lname}}
+                </div>
+                <div class="col-sm-7">
+                  {{ur.email}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<div class="row ">
+    <div class="col">
+      <div class="card bg-default shadow">
+        <div class="card-header bg-transparent border-0">
+          <h3 class="text-white mb-0 text-center">Role Management
+          </h3>
+        </div>
+          <!-- Button trigger modal  text-center-->
+<button type="button"(click)="showAddRoleModal = true" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalRole">
+ADD NEW Role
+</button>
+        <div class="table-responsive">
+          <table  class="table align-items-center table-dark table-flush" >
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">RoleName</th>
+                <th scope="col">State</th>
+                <th scope="col">Priviléges</th>
+                <th scope="col">Users</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let role of listroles | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{role.roleName}}</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+          
+                  <div *ngIf="role.etatrole == false"><i class="bg-warning"></i>Deactivated</div>
+                  <div *ngIf="role.etatrole == true"><i class="bg-success"></i>Activated</div>
+             
+
+                </td>
+                <td>
+                  <span class="badge badge-dot mr-4">
+                   
+                    <button type="button" data-toggle="modal" data-target="#exampleModalListPrivilege" class="btn btn-outline-info btn-sm" (click)="privilegesRole(role.idRole)"> ListPriviléges </button>
+                  </span>
+                </td>
+                <td>
+                  <span class="badge badge-dot mr-4">
+                    <button type="button" data-toggle="modal" data-target="#exampleModalListUsers" class="btn btn-outline-info btn-sm" (click)="usersRole(role.idRole)"> ListUsers</button>
+                  </span>
+                </td>
+              
+                <td class="text-right">
+                  <div ngbDropdown placement="bottom-right">
+                    <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="javascript:void(0)" (click)="openModalUpdateRole(role)" data-toggle="modal" data-target="#exampleModalUpdateRole"  >Update</a>
+                      <a class="dropdown-item" href="javascript:void(0)" (click)="deleteRole(role)">Delete</a>
+                      
+                      <a class="dropdown-item" href="javascript:void(0)">{{role.etatrole ? 'Disable Role' : 'Enable Role'}}</a>
+                    </div>
+                  </div>
+                </td>
+
+              </tr>
+            
+            </tbody>
+          </table>
+          <ngb-pagination class="d-flex justify-content-center" [(page)]="page" [pageSize]="pageSize" [collectionSize]="listroles.length" ></ngb-pagination>
+        </div>
+        
+        </div>
+   
+      </div>
+    </div>
+
+
+  <!-- Modal ADD NEW Role -->
+<div *ngIf="showAddRoleModal" [ngClass]="{'d-none': !showAddRoleModal}" class="modal fade" id="exampleModalRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalRoleTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add New Role</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          
+        </button>
+      </div>
+      <div class="modal-body">
+       <form #formAddRole="ngForm" (ngSubmit)="addRoleWithPrivileges()">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-ROLENAME :">Role Name :</label>
+              <input [(ngModel)]="registerRoleData.roleName" type="text" id="input-ROLENAME :" class="form-control form-control-alternative" placeholder="NAME" >
+            </div>
+          </div>
+        </div>
+        <div class="privilege-list"  style="display: flex;flex-wrap: wrap; margin-right: 50px; ">
+          <label class="form-control-label" for="input-ROLENAME :">Priviléges List :</label>
+        <div *ngFor="let p of privis;let ii = index;">
+          <label>
+              <input type="checkbox" name="privileges" value="{{p.idPrivilege}}"> {{p.privilegeName}}
+              
+          </label>
+      </div>
+      </div>
+     
+    
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<script src="https://unpkg.com/@popperjs/core@2.10.2/dist/bundle.min.js"></script>
+<script src="https://unpkg.com/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<div class="modal fade" id="exampleModalUpdateRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalUpdateRole" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Role</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      hi
+      
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>

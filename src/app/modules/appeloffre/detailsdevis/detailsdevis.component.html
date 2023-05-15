@@ -1,0 +1,73 @@
+
+<div class="row mt-5">
+  <div class="col">
+    <div class="card bg-default shadow">
+      <div class="card-header bg-transparent border-0">
+        <h3 class="text-white mb-0">Card tables</h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center table-dark table-flush">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Prix sans remise</th>
+              <th scope="col">pourcentage de Remise</th>
+              <th scope="col">etat</th>
+              <th scope="col">disponibilite</th>
+              <th scope="col">periode de Validite</th>
+              <th scope="col">delai de Livraison</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of devisFournisseur">
+            <tr>
+              <th scope="row">
+                <div class="media align-items-center">
+                  <a href="javascript:void(0)" class="avatar rounded mr-3">
+                  </a>
+                  <div class="media-body">
+                    <span class="mb-0 text-sm">{{item.Ptotal}}</span>
+                  </div>
+                </div>
+              </th>
+              <td>
+                <label for={{item.pourcentageRemise}}></label>
+<input type="text" id="pourcentageRemise" name="pourcentageRemise">
+
+               {{item.pourcentageRemise}} %
+              </td>
+              <td>
+                {{item.etat}}
+              </td>
+              <td>
+                {{item.periodeValidite}}
+              </td>
+              <td>
+                {{item.delaiLivraison}}
+              </td>
+
+              <td>
+                <div class="d-flex align-items-center">
+                  <span class="mr-2">{{item.disopnible}}</span>
+
+                  </div>
+
+              </td>
+              <td class="text-right">
+                <div ngbDropdown placement="bottom-right">
+                  <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                    <i class="fas fa-ellipsis-v"></i>
+                  </a>
+
+                </div>
+
+              </td>
+              <td>
+                <button (click)="confirmer(item.idDevisFourniseur)" class="btn btn-primary">confirmer devis</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

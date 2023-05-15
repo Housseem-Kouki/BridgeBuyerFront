@@ -1,0 +1,178 @@
+
+<div *ngIf="privilegeForUpdate" class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalUpdate" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Privilege</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #formUpdatePrivilege="ngForm" (ngSubmit) = "updatePrivilege()">
+          <div class="form-group">
+            <label for="exampleInputprivilegeName">Name : </label>
+            <input type="text" [(ngModel)]="privilegeForUpdate.privilegeName" required name="exampleInputprivilegeName" class="form-control" id="exampleInputprivilegeName" aria-describedby="privilegeName" >  
+          </div>
+          <div class="form-group">
+            <label for="exampleInputprivilegeCategorie">Categorie : </label>
+            <select id="exampleInputconfig" name="config" class="form-control" [(ngModel)]="privilegeForUpdate.privilegecategorie">
+              <option value="privilegeAdmin" [ng-selected]="privilegeForUpdate.privilegecategorie === 'privilegeAdmin'">Privilege Admin</option>
+              <option value="privilegeFournisseur" [ng-selected]="privilegeForUpdate.privilegecategorie === 'privilegeFournisseur'">Privilege Fournisseur</option>
+              <option value="privilegeOperateur" [ng-selected]="privilegeForUpdate.privilegecategorie === 'privilegeOperateur'">Privilege Operateur</option>
+              <option value="privilegeAcheteur" [ng-selected]="privilegeForUpdate.privilegecategorie === 'privilegeAcheteur'">Privilege Acheteur</option>
+          </select>
+          </div>
+          <div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+        </form>
+      
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0 text-center">Priviléges List</h3>
+        </div>
+        <div class="form-group">
+          <label for="categorie">Categorie</label>
+          <select class="form-control" [(ngModel)]="selectedCategorie" name="categorie" id="categorie">
+            <option value="">All</option>
+            <option  value="privilegeAdmin">Privilege Admin</option>
+                  <option value="privilegeFournisseur">Privilege Fournisseur </option>
+                  <option value="privilegeOperateur">Privilege Operateur</option>
+                  <option value="privilegeAcheteur">Privilege Acheteur</option>
+          </select>
+        </div>
+
+        <button type="button"(click)="showAddPrivilegesModal = true" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalPrivilege">
+          ADD NEW Privilege
+          </button>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Categorie</th>
+                <th scope="col">Roles</th>
+                <th scope="col"colspan="2" >Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let p of listprivis">
+              <tr  *ngIf="selectedCategorie === '' || selectedCategorie === p.privilegecategorie">
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{p.privilegeName}}</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                 {{p.privilegecategorie}}
+                </td>
+                <td>
+                  <span class="badge badge-dot mr-4">
+                    <button type="button" data-toggle="modal" data-target="#exampleModalListRoles" class="btn btn-outline-info btn-sm" (click)="rolesPrivi(p.idPrivilege)"> List Roles</button>
+                  </span>
+                </td>
+                  <td>
+                    <i class="fa fa-trash" aria-hidden="true" (click)="deletePrivilege(p.idPrivilege , p.privilegeName)"></i>
+                    <app-confirmation-dialog></app-confirmation-dialog>
+                  </td>
+                  <td>
+                    <i class="ni ni-curved-next" (click)="openModalUpdatePrivilege(p.idPrivilege )" aria-hidden="true"></i>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+              <li class="page-item disabled">
+                <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                  <i class="fas fa-angle-left"></i>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="javascript:void(0)">1</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="javascript:void(0)">2 <span class="sr-only"></span></a>
+              </li>
+              <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="javascript:void(0)">
+                  <i class="fas fa-angle-right"></i>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+    <!-- Modal ADD NEW Role -->
+<div *ngIf="showAddPrivilegesModal" [ngClass]="{'d-none': !showAddPrivilegesModal}" class="modal fade" id="exampleModalPrivilege" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrivilegeTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add New Privilege</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #formAddPrivilege="ngForm" (ngSubmit)="addPrivilege()">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="form-group">
+                <label class="form-control-label" for="privilegeName">Privilege Name :</label>
+                <input [(ngModel)]="registerPrivilegeData.privilegeName" type="text" id="privilegeName" class="form-control form-control-alternative" placeholder="NAME" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="form-group">
+                <label class="form-control-label" for="privilegecategorie">Privilege Categorie :</label>
+                <select class="form-control form-control-alternative"  [(ngModel)]="registerPrivilegeData.privilegecategorie" name="privilegecategorie" id="privilegecategorie">
+                  <option selected>choose catégorie :</option>
+                  <option  value="privilegeAdmin">Privilege Admin</option>
+                  <option value="privilegeFournisseur">Privilege Fournisseur </option>
+                  <option value="privilegeOperateur">Privilege Operateur</option>
+                  <option value="privilegeAcheteur">Privilege Acheteur</option>
+                </select>
+              </div>
+            </div>
+          </div>
+      
+          
+       
+      
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

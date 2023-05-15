@@ -1,0 +1,145 @@
+
+
+
+
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" class="text-center">appel d'offre</h3>
+          <button type="button"  class="btn btn-primary" (click)="getAppelOffreByEtat(2)" >en cours(2)</button>
+
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">reference</th>
+                <th scope="col">dateCreationC</th>
+                <th scope="col">dateLimit</th>
+                <th scope="col">datePayment</th>
+                <th scope="col">prixInitiale</th>
+                <th scope="col">commentaire</th>
+                <th scope="col">etat</th>
+                <th scope="col"></th>
+
+              </tr>
+            </thead>
+            <tbody  *ngFor="let item of ListAppeloffre">
+              <tr>
+
+                <td>
+                  {{item.reference}}
+                </td>
+                <td>
+                  {{item.dateCreationC}}
+                </td>
+                <td>
+                  {{item.dateLimit}}
+                </td>
+                <td>
+                  {{item.datePayment}}
+                </td>
+                <td>
+                  {{item.prixInitiale}}
+                </td>
+                <td>
+                  {{item.commentaire}}
+                </td>
+                <td>
+                  {{item.etat}}
+                </td>
+
+
+<td>
+  <button (click)="openModalAddDevis(item.idAppelOffre) " class="btn btn-primary"  data-toggle="modal" data-target="#exampleModalAddDevis"  >add devis</button>
+<button (click)="Creerdevis(item.idAppelOffre)" class="btn btn-danger">associer devis</button>
+<button type="button"  class="btn btn-primary" (click)="devis(item.idAppeloffre)">list Devis</button>
+
+
+</td>
+
+
+
+
+              </tr><td>
+
+              <button   class="btn btn-primary" (click)="exportPDF(item.idAppelOffre)" download="export.pdf">Telecharger Appel d'offre</button>
+
+           
+            </td>
+
+
+
+            </tbody>
+
+
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="modal fade" id="exampleModalAddDevis" tabindex="-1" role="dialog" aria-labelledby="exampleModalAddDevis" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Devis</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form  #formUpdateRole="ngForm" (ngSubmit)="Creerdevis()">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="exampleInputPTSansRemise">Prix sans remise :</label>
+              <input type="number" [(ngModel)]="devisFournisseur.PTSansRemise" required name="exampleInputPTSansRemise" class="form-control" id="exampleInputPTSansRemise" aria-describedby="PTSansRemise" >  
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="exampleInputPourcentage">Pourcentage remise:</label>
+              <input type="number" [(ngModel)]="devisFournisseur.remise" required name="exampleInputPourcentage" class="form-control" id="exampleInputPourcentage" aria-describedby="Pourcentage" >  
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="exampleInputperiodeValidite">Periode Validite:</label>
+              <input type="number" [(ngModel)]="devisFournisseur.periodeValidite" required name="exampleInputperiodeValidite" class="form-control" id="exampleInputperiodeValidite" aria-describedby="periodeValidite" >  
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="exampleInputCommentaire">Commentaire : </label>
+              <input type="text" [(ngModel)]="devisFournisseur.commentaire" required name="exampleInputCommentaire" class="form-control" id="exampleInputCommentaire" aria-describedby="commentaire" >  
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Add</button>
+        </div>
+      </form>
+      
+      </div>
+    </div>
+  </div>
+</div>

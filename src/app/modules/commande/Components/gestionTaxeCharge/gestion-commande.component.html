@@ -1,0 +1,306 @@
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+  <!-- Page content -->
+  <div class="container mt--7"  style="min-width: 100%;" >
+    <!-- Table -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <h3 class="mb-0 text-center">Charge Management</h3>
+          </div>
+
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            ADD NEW Charge
+          </button>
+
+          <!-- Modal ADD NEW Charge -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">ADD NEW Charge</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form #formCompagny="ngForm" (ngSubmit)="saveCharge()">
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label">nomCharge</label>
+                          <input type="text" id="nomCharge" [(ngModel)]="charge.nomCharge" class="form-control form-control-alternative" placeholder="nomCharge">
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label">montantCharge</label>
+                          <input type="text" id="montantCharge" [(ngModel)]="charge.montantCharge" class="form-control form-control-alternative" placeholder="montantCharge">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Liste Charge -->
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">nom charge</th>
+                  <th scope="col">montant charge</th>
+                  <th scope="col">Détails</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let charge of listecharge">
+                <tr>
+                  <td>{{charge.nomCharge}}</td>
+                  <td>{{charge.montantCharge}}</td>
+                  <td class="text-right">
+                    <div ngbDropdown placement="bottom-right">
+                      <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
+                        <i class="fas fa-ellipsis-v"></i>
+                      </a>
+                      <div ngbDropdownMenu ngbDrop class="dropdown-menu-right dropdown-menu-arrow">
+                        <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#charge" data-target="#exampleModalUpdateCharge" (click)="onclickupdateCharge(charge)">Update</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="deleteCharge(charge.idChargeFinanciere)">Delete</a>
+                      </div>
+                    </div>
+
+
+                  </td>
+                </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+
+
+
+          <div class="card-footer py-4">
+            <nav aria-label="...">
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item disabled">
+                  <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                    <i class="fas fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="javascript:void(0)">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0)">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0)">
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    <!-- Dark table -->
+    <div class="col-md-6">
+      <div class="col">
+        <div class="card bg-default shadow">
+          <div class="card-header bg-transparent border-0">
+            <h3 class="text-white mb-0 text-center">Taxe Management</h3>
+          </div>
+
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalRole">
+            ADD NEW Taxe
+          </button>
+
+          <!-- Liste Taxes -->
+          <div class="table-responsive">
+            <table class="table align-items-center table-dark table-flush">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Type Taxe</th>
+                  <th scope="col">Taux Taxe</th>
+                  <th scope="col">Détails</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let taxe of listetaxes">
+                <tr>
+                  <td>
+                    <div class="media align-items-center">
+                      <div class="media-body">
+                        <span class="mb-0 text-sm">{{taxe.nomTaxe}}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="media align-items-center">
+                      <div class="media-body">
+                        <span class="mb-0 text-sm">{{taxe.tauxTaxe}}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-right">
+                    <div ngbDropdown placement="bottom-right">
+                      <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
+                        <i class="fas fa-ellipsis-v"></i>
+                      </a>
+                      <div ngbDropdownMenu class="dropdown-menu-right dropdown-menu-arrow">
+                        <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModalUpdateTaxe" (click)="onclickupdatetaxe(taxe)">Update</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="deleteTaxe(taxe.idTaxe)">Delete</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@popperjs/core@2.10.2/dist/bundle.min.js"></script>
+<script src="https://unpkg.com/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+
+<!-- Modal Charge-->
+
+
+
+<!-- Modal UpdateTaxe -->
+<div class="modal fade" id="exampleModalUpdateTaxe" tabindex="-1" role="dialog" aria-labelledby="exampleModalUpdateUser" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">update taxe</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <form (ngSubmit)="updateTaxe()">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label" for="input-ROLENAME :">Type Taxe</label>
+            <input [(ngModel)]="taxe.nomTaxe" name="nomTaxe" type="text" id="nomTaxe" class="form-control form-control-alternative"  >
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label" for="input-ROLENAME :">Taux Taxe</label>
+            <input [(ngModel)]="taxe.tauxTaxe" type="text" id="input-Taux-Taxe :" class="form-control form-control-alternative" >
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"  type="submit">Save </button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal UpdateCharge -->
+<div class="modal fade" id="exampleModalUpdateCharge" tabindex="-1" role="dialog" aria-labelledby="exampleModalUpdateUser" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">update charge</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+
+        </button>
+      </div>
+      <form (ngSubmit)="updateCharge()">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label" for="input-ROLENAME :">Nom Charge</label>
+            <input [(ngModel)]="charge.nomCharge" name="nomCharge" type="text" id="nomCharge" class="form-control form-control-alternative"  >
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label" for="input-ROLENAME :">Montant Charge</label>
+            <input [(ngModel)]="charge.montantCharge" type="text" id="input-Taux-Charge :" class="form-control form-control-alternative" >
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"  type="submit">Save </button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal ADD NEW Taxe -->
+<div class="modal fade" id="exampleModalRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalRoleTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add New Taxe</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+
+        </button>
+      </div>
+      <div class="modal-body">
+       <form #formAddRole="ngForm" (ngSubmit)="saveTaxe()">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-ROLENAME :">Type Taxe</label>
+              <input [(ngModel)]="taxe.nomTaxe" type="text" id="input-Type-Taxe :" class="form-control form-control-alternative" placeholder="Type Taxe" >
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-ROLENAME :">Taux Taxe</label>
+              <input [(ngModel)]="taxe.tauxTaxe" type="text" id="input-Taux-Taxe :" class="form-control form-control-alternative" placeholder="Taux Taxe" >
+            </div>
+          </div>
+        </div>
+
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+

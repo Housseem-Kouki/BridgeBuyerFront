@@ -1,0 +1,42 @@
+<div class="modal" [class]="modalNewLivraision  ? 'open' :'' " >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ajouter un bon de réception</h5>
+        <button type="button" class="btn btn-blue" (click)="close()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulaire d'ajout -->
+        <form >
+          <div class="form-group">
+            <label>Date de réception</label>
+            <input type="date" class="form-control" [(ngModel)]="bonReception.dateReception" name="dateReception" required>
+          </div>
+          <div class="form-group">
+            <label>Quantité à recevoir</label>
+            <input type="number" class="form-control" [(ngModel)]="bonReception.quantiteRecevoir" name="quantiteRecevoir" required>
+          </div>
+          <div class="form-group">
+            <label>Quantité acceptée</label>
+            <input type="number" class="form-control" [(ngModel)]="bonReception.quantiteAccepte" name="quantiteAccepte" required>
+          </div>
+          <div class="form-group">
+            <label>Quantité refusée</label>
+            <input type="number" class="form-control" [(ngModel)]="bonReception.quantiteRefuse" name="quantiteRefuse" required>
+          </div>
+          <div class="form-group">
+            <label>État</label>
+            <input type="text" class="form-control" [(ngModel)]="bonReception.etat" name="etat" required>
+          </div>
+          <div class="form-group">
+            <label>Archive</label>
+            <input type="checkbox" class="form-control" [(ngModel)]="bonReception.archive" name="archive">
+          </div>
+          <button type="button" class="btn btn-primary" (click)="addBonReception(bonReception)">Enregistrer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

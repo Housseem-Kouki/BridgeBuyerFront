@@ -1,0 +1,15 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email" />
+    <div
+      *ngIf="
+        form.controls.email.errors?.required && form.controls.email.touched
+      "
+    >
+      Email is required
+    </div>
+  </div>
+  <button type="button" (click)="previousStep()">Previous</button>
+  <button type="button" (click)="nextStep()">Next</button>
+</form>

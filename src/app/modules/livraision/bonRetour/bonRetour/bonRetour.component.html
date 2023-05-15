@@ -1,0 +1,28 @@
+<h1>Liste Bon Retour</h1>
+<app-add-factureAvoir *ngIf="modalNewFactureAvoir" [modalNewFactureAvoir]="modalNewFactureAvoir"
+(closeFactureAvoirModel)="closeNewFactureAcoirModal($event)"></app-add-factureAvoir>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>quantiteRefusee</th>
+        <th>commentaire</th>
+        <th>archive</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody *ngFor="let brt of bonRetours">
+      <tr *ngIf="!brt.archive">
+        <td>{{ brt.quantiteRefusee }}</td>
+        <td>{{ brt.commentaire }}</td>
+        <td>{{ brt.archive }}</td>
+        <td>
+          <button (click)="deleteBonRetour(brt.idBonRetour)" class="btn btn-primary" style="margin-left: 10px">Delete</button>
+          <button class="btn btn-danger"  (click)="addNewFactureAvoir(brt.idBonRetour)">Ajout FactureAvoir</button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

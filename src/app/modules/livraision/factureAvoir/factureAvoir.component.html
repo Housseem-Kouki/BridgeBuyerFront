@@ -1,0 +1,25 @@
+<h1>Table des factures avoirs</h1>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>idFactureAvoir</th>
+        <th>montantTotal</th>
+        <th>archive</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody *ngFor="let f of factureAvoirs">
+      <tr *ngIf="!f.archive">
+        <td>{{ f.idFactureAvoir }}</td>
+        <td>{{ f.montantTotal }}</td>
+        <td>{{ f.archive }}</td>
+        <td>Actions à définir</td>
+        <td>
+          <button (click)="deleteFactureAvoir(f.idFactureAvoir)" class="btn btn-danger" style="margin-left: 10px">Delete</button>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

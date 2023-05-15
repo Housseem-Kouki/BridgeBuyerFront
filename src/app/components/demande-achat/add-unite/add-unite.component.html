@@ -1,0 +1,35 @@
+<div class="card rounded-0">
+  <div class="card-header rounded-0">Ajouter nature article</div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="my-3">
+        <label class="form-label" for="nomunite">Nom</label>
+        <input
+          class="form-control"
+          id="nomunite"
+          formControlName="nomunite"
+          placeholder="nom unite"
+        />
+        <div
+          *ngIf="
+            form.controls.nomunite.errors?.required &&
+            form.controls.nomunite.touched
+          "
+          class="text-danger text-xs mt-2"
+        >
+          Name is required
+        </div>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="btn btn-primary w-full"
+          [disabled]="!form.valid"
+        >
+          Ajouter
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

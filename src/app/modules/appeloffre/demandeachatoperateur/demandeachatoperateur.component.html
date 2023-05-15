@@ -1,0 +1,65 @@
+
+
+
+
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" class="text-center">Demande en attente de validation</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Budget</th>
+                <th scope="col">Status</th>
+                <th scope="col">User</th>
+                <th scope="col">options</th>
+                <th scope="col"></th>
+
+              </tr>
+            </thead>
+            <tbody  *ngFor="let item of listdemandeachat">
+              <tr>
+
+                <td>
+                  {{item.budget}}
+                </td>
+                <td>
+                  {{item.etatdemandeachat}}
+                </td>
+                <td>
+                  {{item.etatdemandeachat}}
+                </td>
+
+<td>
+                <!-- Button trigger modal -->
+
+<button (click)="Accept(item.iddemandeachat)" class="btn btn-primary">Lancer un appel d'offre</button>
+<button (click)="Refuser(item.iddemandeachat)" class="btn btn-primary">refuser une demande d'achat</button>
+
+</td>
+
+
+
+
+              </tr>
+
+
+
+
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

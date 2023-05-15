@@ -1,0 +1,217 @@
+<div class="card rounded-2">
+  <div
+    class="card-header d-flex justify-content-between align-items-center bg-primary"
+  >
+    <h2 class="text-white">Liste des articles</h2>
+
+    <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+      <div class="form-group mb-0" [ngClass]="">
+        <div class="input-group input-group-alternative">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+          </div>
+          <input
+            class="form-control ag-row-hover"
+            type="search"
+            #key="ngModel"
+            ngModel
+            name="key"
+            placeholder="Search Article"
+            
+            (keyup.enter)="SearchMultiple(key.value)"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="SearchMultiple(key.value)"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="fichier position-relative">
+      <button (click)="exportToPdf()" class="fas fa-file-pdf" style="color: #000000;">Export PDF</button>
+    </div> 
+    <div class="fichier position-relative">
+      <button (click)="exportArticles()" class="fas fa-file-excel" style="color: #000000;">Export Excel</button>
+    </div>
+ 
+  </div>
+  <div class="table-responsive-sm">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">nomarticle</th>
+          <th scope="col">prixestime</th>
+          <th scope="col">quantite</th>
+          <th scope="col">prixestimeAvecRemise</th>
+          <th scope="col">Nature</th>
+          <th scope="col">Unite</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let article of articles; index as i">
+          <tr>
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ article.nomarticle }}</td>
+            <td>{{ article.prixestime | number }}</td>
+            <td>{{ article.quantite }}</td>
+            <td>{{ article.prixestimeAvecRemise | number }}</td>
+            <td>{{ article.natureArticle?.nomanature }}</td>
+            <td>{{ article.nomarticle?.nomunite }}</td>
+            <td>
+              <button class="btn btn-light" (click)="toggleComments(article)">
+                <i class="fas fa-comment"></i>
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="selectedArticle === article">
+            <td colspan="8">
+              <div
+                class="d-flex justify-content-between align-items-center w-full"
+              >
+                <div class="comments">
+                  <h4>Commentaires:</h4>
+                  <ul class="list-group-flush">
+                    <li
+                      *ngFor="let comment of article.comments"
+                      class="list-group-item"
+                    >
+                      <div class="comment-content position-relative">
+                        <p class="mb-1 text-lg">
+                          <span class="me-3"> {{ comment.content }}</span>
+                          <button
+                            (click)="deleteComment(comment.idComment)"
+                            class="btn btn-danger btn-sm"
+                          >
+                            <i class="fa fa-trash-alt"></i>
+                          </button>
+                        </p>
+
+                        <div class="reactions-summary">
+                          <div
+                            class="reaction-count"
+                            *ngIf="
+                              getReactionCount('LIKE', comment.reactComment) > 0
+                            "
+                          >
+                            <span class="circle">
+                              👍
+                              {{
+                                getReactionCount("LIKE", comment.reactComment)
+                              }}
+                            </span>
+                          </div>
+                          <div
+                            class="reaction-count"
+                            *ngIf="
+                              getReactionCount('ANGRY', comment.reactComment) >
+                              0
+                            "
+                          >
+                            <span class="circle">
+                              😠
+                              {{
+                                getReactionCount("ANGRY", comment.reactComment)
+                              }}
+                            </span>
+                          </div>
+                          <div
+                            class="reaction-count"
+                            *ngIf="
+                              getReactionCount(
+                                'DISLIKE',
+                                comment.reactComment
+                              ) > 0
+                            "
+                          >
+                            <span class="circle">
+                              👎
+                              {{
+                                getReactionCount(
+                                  "DISLIKE",
+                                  comment.reactComment
+                                )
+                              }}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center mt-2">
+                        <button
+                          (click)="
+                            reactToComment(
+                              {
+                                commentId: comment.idComment,
+                                react: 'LIKE'
+                              },
+                              article
+                            )
+                          "
+                          class="btn btn-secondary btn-sm react-button"
+                        >
+                          👍
+                        </button>
+                        <button
+                          (click)="
+                            reactToComment(
+                              {
+                                commentId: comment.idComment,
+                                react: 'ANGRY'
+                              },
+                              article
+                            )
+                          "
+                          class="btn btn-secondary btn-sm react-button"
+                        >
+                          😠
+                        </button>
+                        <button
+                          (click)="
+                            reactToComment(
+                              {
+                                commentId: comment.idComment,
+                                react: 'DISLIKE'
+                              },
+                              article
+                            )
+                          "
+                          class="btn btn-secondary btn-sm react-button"
+                        >
+                          👎
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <label class="form-label" for="nomunite"
+                    >écrire un commentaire</label
+                  >
+                  <input
+                    class="form-control form-control-sm"
+                    id="nomunite"
+                    placeholder="nom unite"
+                    [(ngModel)]="content"
+                  />
+                  <button
+                    (click)="addComment(article.idarticle)"
+                    class="btn btn-primary btn-sm mt-2"
+                  >
+                    ajouter
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

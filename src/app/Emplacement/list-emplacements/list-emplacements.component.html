@@ -1,0 +1,64 @@
+<div class="modal-dialog modal-lg" role="document">
+
+  <div class="modal-content">
+    <section class="center">
+      <form action="search.html"  method="post" >
+
+        <div class="box-container ml-9">
+
+           <input type="text" name="title"  required maxlength="50" placeholder="Search*" class="input" (input)="search(searchTerm)" [(ngModel)]="searchTerm " >
+          <!-- <button class="inline-btn" type="button" (click)="search(searchTerm)">Search</button> -->
+        </div>
+      </form>
+
+      </section>
+    <div class="modal-header bg-primary text-light">
+
+      <h5 class="modal-title">Liste des Emplacements</h5>
+      <button type="button" class="close text-light" data-dismiss="modal">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="py-1">
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Nom Emplacement</th>
+              <th>devise</th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let e of emplacements ">
+              <td>{{ e.nomEmplacement }}</td>
+              <td>{{ e.devise }}</td>
+
+              <td>
+                <div class="btn-group" role="group" aria-label="Actions">
+                  <button (click)="deleteEmplacement(e.idEmplacement)" class="btn btn-danger btn-sm">Delete</button>
+
+
+                </div>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+        <div class="btn-group" role="group" aria-label="Actions">
+          <button (click)="trieListEmplacement()" class="btn btn-success btn-sm">Trier la liste</button>
+
+
+        </div>
+        <div class="btn-group" role="group" aria-label="Actions">
+          <button (click)="createEmplacement()" class="btn btn-primary btn-sm">ajouter emplacement</button>
+
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

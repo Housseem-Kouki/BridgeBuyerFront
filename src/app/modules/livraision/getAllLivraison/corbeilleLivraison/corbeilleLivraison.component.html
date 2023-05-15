@@ -1,0 +1,35 @@
+<h1> Corbeille Livraisons</h1>
+
+<div class="container">
+  <table class="table table-striped">
+  <thead>
+  <tr>
+  <th>quantiteDelivre</th>
+  <th>dateLivraison</th>
+  <th>etat</th>
+  <th>archive</th>
+  <th>Actions</th>
+  </tr>
+  </thead>
+
+  <tbody *ngFor="let livraison of livraisons">
+
+  <tr *ngIf="livraison.archive">
+
+  <td>{{ livraison.quantiteDelivre }}</td>
+  <td>{{ livraison.dateLivraison | date }}</td>
+  <td>{{ livraison.etat }}</td>
+  <td>{{ livraison.archive }}</td>
+  <td>
+    <button
+    (click)="restoreLivraison(livraison.idLivraison)"
+    class="btn btn-secondary"
+    style="margin-left: 10px"
+    >
+    Restaure
+    </button>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>

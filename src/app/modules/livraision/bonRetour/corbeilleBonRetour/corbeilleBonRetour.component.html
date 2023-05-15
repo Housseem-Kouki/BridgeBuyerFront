@@ -1,0 +1,26 @@
+<h1>Corbeille bon retour</h1>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>quantiteRefusee</th>
+        <th>commentaire</th>
+        <th>archive</th>
+        <th>factureAvoir</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody *ngFor="let br of bonRetours">
+      <tr *ngIf="br.archive">
+        <td>{{ br.quantiteRefusee }}</td>
+        <td>{{ br.commentaire }}</td>
+        <td>{{ br.archive }}</td>
+        <td>{{ br.factureAvoir }}</td>
+        <td>
+          <button (click)="archiveBonRetour(br.idBonRetour)" class="btn btn-secondary" style="margin-left: 10px">Archive</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>

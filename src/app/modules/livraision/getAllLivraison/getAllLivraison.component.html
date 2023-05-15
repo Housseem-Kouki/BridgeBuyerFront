@@ -1,0 +1,103 @@
+<h1> List Livraison</h1>
+<!--<input type="text" (input)="searchLivraisons($event.target.value)" placeholder="Search Livraison...">-->
+
+<form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+  <div class="form-group mb-0" [ngClass]="">
+    <div class="input-group input-group-alternative">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
+      </div>
+      <input
+        class="form-control ag-row-hover"
+        type="search"
+        #key="ngModel"
+        ngModel
+        name="key"
+        placeholder="Search Article"
+
+        (keyup.enter)="SearchMultiple(key.value)"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="SearchMultiple(key.value)"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+  <app-add-livraison *ngIf="newLivraisonModal" [modalNewLivraision]="newLivraisonModal"
+                      (closeLivraisonModel)="closeNewLivraisonModal($event)"></app-add-livraison>
+
+<div class="container">
+  <button
+  (click)="navigateCorbeilleLiv()"
+  class="btn btn-danger"
+  style="margin-left: 10px"
+  >
+  Corbeille
+  </button>
+
+  <table class="table table-striped">
+  <thead>
+  <tr>
+  <th>quantiteDelivre</th>
+  <th>dateLivraison</th>
+  <th>etat</th>
+  <th>archive</th>
+  <th>Actions</th>
+  </tr>
+  </thead>
+
+  <tbody *ngFor="let livraison of livraisons">
+
+  <tr *ngIf="!livraison.archive">
+
+  <td>{{ livraison.quantiteDelivre }}</td>
+  <td>{{ livraison.dateLivraison | date }}</td>
+  <td>{{ livraison.etat }}</td>
+  <td>{{ livraison.archive }}</td>
+  <td>
+
+    <button
+    (click)="deleteLivraison(livraison.idLivraison)"
+    class="btn btn-danger"
+    style="margin-left: 10px"
+    >
+    Delete
+    </button>
+
+
+
+
+
+    <button
+    (click)="validerBL(livraison.idLivraison)"
+    class="btn btn-primary"
+    style="margin-left: 10px"
+    >
+    Valider
+    </button>
+    <button
+    (click)="telechargerPDF(livraison.idLivraison)"
+    class="btn btn-secondary"
+    style="margin-left: 10px"
+    >
+    PDF
+    </button>
+    <button class="btn btn-danger" (click)="addNewLivraison(livraison.idLivraison)">Ajout BL</button>
+    </td>
+    </tr>
+
+
+    </tbody>
+    </table>
+  </div>
+
+
+

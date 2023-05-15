@@ -1,0 +1,102 @@
+
+
+
+
+
+
+
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" class="text-center">liste des offres </h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+
+                <th scope="col">prixOffre</th>
+                <th scope="col">dateValidation</th>
+                <th scope="col">datecreationO</th>
+
+                <th scope="col">etat</th>
+                <th scope="col">commentaire</th>
+
+
+              </tr>
+            </thead>
+            <tbody  *ngFor="let devis of Listoffre">
+              <tr>
+
+
+                <td>
+                  {{devis.prixOffre}}
+                </td>
+                <td>
+                  {{devis.dateValidation}}
+                </td>
+                <td>
+                  {{devis.datecreationO}}
+                </td>
+                <td>
+                  {{devis.etat}}
+                </td>
+                <td>
+                  {{devis.commentaire}}
+                </td>
+
+
+<td>
+                <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Details
+</button>
+<button type="button" *ngIf="devis.etat == 0" class="btn btn-primary" (click)="addCommandeAndAssignToOffre(devis.idOffre)">Accepter offre </button>
+<span *ngIf="devis.etat == 0" >   Offre Accepter </span>
+
+<td>
+
+</td>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+              </tr>
+
+
+
+
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

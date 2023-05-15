@@ -1,0 +1,88 @@
+<p>listappel-operateur works!</p>
+
+
+  
+    
+    
+
+
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" class="text-center">appel d'offre</h3>
+
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">reference</th>
+                <th scope="col">dateCreationC</th>
+                <th scope="col">dateLimit</th>
+                <th scope="col">datePayment</th>
+                <th scope="col">prixInitiale</th>
+                <th scope="col">commentaire</th>
+                <th scope="col">etat</th>
+                <th scope="col"></th>
+
+              </tr>
+            </thead>
+            <tbody  *ngFor="let item of ListAppeloffre">
+              <tr>
+
+                <td>
+                  {{item.reference}}
+                </td>
+                <td>
+                  {{item.dateCreationC}}
+                </td>
+                <td>
+                  {{item.dateLimit}}
+                </td>
+                <td>
+                  {{item.datePayment}}
+                </td>
+                <td>
+                  {{item.prixInitiale}}
+                </td>
+                <td>
+                  {{item.commentaire}}
+                </td>
+                <td>
+                  {{item.etat}}
+                </td>
+
+
+
+
+
+
+
+              </tr>
+              <td>
+                <button type="button"  class="btn btn-primary" (click)="offre()">creer l'offre</button>
+
+                <button type="button"  class="btn btn-primary" (click)="devis(item.idAppeloffre)">devis proposes par fournisseur</button>
+              </td>
+
+
+
+
+
+
+            </tbody>
+
+
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

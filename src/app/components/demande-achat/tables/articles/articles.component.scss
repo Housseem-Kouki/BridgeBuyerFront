@@ -1,0 +1,33 @@
+.comment-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reactions-summary {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.reaction-count {
+  margin: 0 5px;
+}
+
+.circle {
+  background-color: #f8f9fa;
+  border-radius: 50%;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.react-button {
+  margin-left: 5px;
+}
+.ficher{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}

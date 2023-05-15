@@ -1,0 +1,348 @@
+<app-confirmation-dialog></app-confirmation-dialog>
+
+<!-- Modal update user  -->
+<div *ngIf="userForUpdate" class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalUpdate" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Update User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #formUpdateUser="ngForm" (ngSubmit) = "updateUser()">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label" for="fname">First Name</label>
+                <input type="text" [(ngModel)]="userForUpdate.fname" required name="exampleInputfname" class="form-control" id="exampleInputfname" aria-describedby="fname" >
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label" for="lname">Last Name</label>
+                <input type="text" [(ngModel)]="userForUpdate.lname" required name="exampleInputlname" class="form-control" id="exampleInputlname" aria-describedby="lname">
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label"  for="phoneNumber">Phone</label>
+                <input type="tel"  [(ngModel)]="userForUpdate.phoneNumber"  name="exampleInputphoneNumber" class="form-control" id="exampleInputphoneNumber" aria-describedby="phoneNumber">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="form-group">
+                <label class="form-control-label"  for="email">Email</label>
+                <input type="email"  [(ngModel)]="userForUpdate.email" name="exampleInputphoneemail" class="form-control" id="exampleInputphoneemail" aria-describedby="email" >
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <h5 class="modal-title text-center" id="exampleModalLabel2">Details User</h5>
+            <div class="row d-flex align-items-center justify-content-between">
+              <div class="col-auto">
+                <span>Created At : {{userForUpdate.createdAt | date: 'dd-MM-yyyy'}}</span>
+              </div>
+              <div class="col">
+                <span>Last Login : {{userForUpdate.lastLogin | date: 'dd-MM-yyyy HH:mm'}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+           <div class="col-4"> <h6 class="heading-small text-muted mb-4">Role :</h6></div>
+            <div class="col-6"> {{userForUpdate.role.roleName}} </div>
+          </div>
+        
+          <div class="row modal-title"> List of associated privileges : </div>
+          <div class="row">
+            <div class="col-6" *ngFor="let p of userForUpdate.role.privileges; let i = index;">
+              {{p.privilegeName}} <i class="fa fa-times" (click)="removePrivilegeFromUser()"></i>
+              <ng-container *ngIf="(i+1) % 2 == 0 || i+1 == userForUpdate.role.privileges.length">
+                <div class="w-100"></div> 
+                <!-- ajoute une div avec largeur à 100% pour passer à la ligne suivante -->
+              </ng-container>
+            </div>
+          </div>
+          Add privilége : 
+          <div class="privilege-list"  style="display: flex;flex-wrap: wrap; margin-right: 50px; ">
+            <label class="form-control-label" for="input-ROLENAME :">Priviléges List :</label>
+          <div *ngFor="let p of privis;let ii = index;">
+            <div *ngIf="userForUpdate.role.roleName === 'fournisseur' && p.privilegecategorie ==='privilegeFournisseur'">
+            <label><input type="checkbox" name="privileges" value="{{p.idPrivilege}}"> {{p.privilegeName}}</label> 
+          </div>  
+          <div *ngIf="userForUpdate.role.roleName === 'operateur' && p.privilegecategorie ==='privilegeOperateur'">
+            <label><input type="checkbox" name="privileges" value="{{p.idPrivilege}}"> {{p.privilegeName}}</label> 
+          </div> 
+          <div *ngIf="userForUpdate.role.roleName === 'acheteur' && p.privilegecategorie ==='privilegeAcheteur'">
+            <label><input type="checkbox" name="privileges" value="{{p.idPrivilege}}"> {{p.privilegeName}}</label> 
+          </div> 
+        </div>
+        </div>
+          <hr>
+          <div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+        </form>
+      
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <!-- Page content -->
+  <div class="container mt--7"  style="min-width: 100%;" >
+     <!-- Table  2-->
+     <div class="row">
+      
+      <div class="col">
+        <div class="card shadow">
+            <div class="card-header border-0">
+              <ul class="tabs-container">
+                <li  (click)="onTabClick('User Management')" [class.active]="activeTab == 'User Management'" class="tab-link">User Management</li>
+                <li (click)="onTabClick('Role Management')" [class.active]="activeTab == 'Role Management'"  class="tab-link">Role Management</li>
+                <li (click)="onTabClick('Privilege Management')" [class.active]="activeTab == 'Privilege Management'"  class="tab-link">Privilege Management</li>
+              </ul>
+              <div *ngIf="activeTab == 'User Management'" class="w-100">
+                <div class="row">
+      
+                  <div class="col">
+                    <div class="card shadow">
+                      <div class="card-header border-0">
+                        <h3 class="mb-0 text-center">List Users</h3>
+                        <form>
+                          <input type="text" [(ngModel)]="searchText" placeholder="search user" (ngModelChange)="filterData()">
+                        </form>
+                        
+                      </div>
+                    
+                    
+                      <!-- Button trigger modal  text-center-->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+             ADD NEW USER
+            </button>
+
+            <!-- Modal ADD NEW USER -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD NEW USER</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form #formCompagny="ngForm" (ngSubmit) = "addNewUser()">
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="fname">First Name</label>
+                            <input type="text" id="fname" [(ngModel)]="newUserData.fname" class="form-control form-control-alternative" placeholder="FirstName" >
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="lname">Last Name</label>
+                            <input type="text" id="lname" [(ngModel)]="newUserData.lname" class="form-control form-control-alternative" placeholder="LastName" >
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label"  for="phoneNumber">Phone</label>
+                            <input type="tel" id="phoneNumber" [(ngModel)]="newUserData.phoneNumber" class="form-control form-control-alternative" placeholder="phoneNumber">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label"  for="email">Email</label>
+                            <input type="email" id="email" [(ngModel)]="newUserData.email" class="form-control form-control-alternative" placeholder="email" >
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="password">Password</label>
+                            <input type="password" id="password" [(ngModel)]="newUserData.password" class="form-control form-control-alternative" placeholder="password" >
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6 col-sm-6" >
+                          <input type="radio" [(ngModel)]="newUserData.role.roleName" value="fournisseur" name="Fournisseur" id="Fournisseur" >
+                          <label  for="Fournisseur">Fournisseur</label>
+                        </div>
+                        <div class="col-6 col-sm-6" >
+                          <input type="radio" [(ngModel)]="newUserData.role.roleName" value="operateur" name="Operateur" id="Operateur" >
+                          <label for="Operateur">Operateur</label>
+                        </div>
+                        <div class="col-6 col-sm-6" >
+                          <input type="radio" [(ngModel)]="newUserData.role.roleName" value="acheteur" name="Acheteur" id="Acheteur">
+                          <label for="Acheteur">Acheteur</label>
+                        </div>
+                        <div class="col-6 col-sm-6" >
+                          <input type="radio" [(ngModel)]="newUserData.role.roleName" value="admin" name="Admin" id="Admin">
+                          <label for="Admin">Admin</label>
+                        </div>
+                      </div>
+                      <div class="row"> <div class="col text-center"> Priviléges List : </div></div> <br>
+                      <div class="privilege-list"  style="display: flex;flex-wrap: wrap; margin-right: 50px; ">
+                       
+                      <div *ngFor="let ppp of privis;let ii = index;">
+                        <div *ngIf="newUserData.role.roleName === 'fournisseur' && ppp.privilegecategorie === 'privilegeFournisseur'">
+                          <label>
+                            <input type="checkbox" name="privileges" value="{{ppp.idPrivilege}}"> {{ppp.privilegeName}}&nbsp;
+                        </label>
+                        </div> 
+                        <div *ngIf="newUserData.role.roleName === 'admin' && ppp.privilegecategorie === 'privilegeAdmin'">
+                          <label>
+                            <input type="checkbox" name="privileges" value="{{ppp.idPrivilege}}"> {{ppp.privilegeName}}&nbsp;
+                        </label>
+                        </div> 
+                        <div *ngIf="newUserData.role.roleName === 'acheteur' && ppp.privilegecategorie === 'privilegeAcheteur'">
+                          <label>
+                            <input type="checkbox" name="privileges" value="{{ppp.idPrivilege}}"> {{ppp.privilegeName}}&nbsp;
+                        </label>
+                        </div> 
+                        <div *ngIf="newUserData.role.roleName === 'operateur' && ppp.privilegecategorie === 'privilegeOperateur'">
+                          <label>
+                            <input type="checkbox" name="privileges" value="{{ppp.idPrivilege}}"> {{ppp.privilegeName}}&nbsp;
+                        </label>
+                        </div> 
+                      </div>
+                    </div>
+                    
+                 
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                  
+                </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+                      <div class="table-responsive" id="users" role="tabpanel">
+                        <table class="table" >
+                          <thead class="thead-light">
+                            <tr>
+                              <th scope="col">Email</th>
+                              <th scope="col">FirstName</th>
+                              <th scope="col">LastName</th>
+                              <th scope="col">ETAT</th>
+                              <th scope="col">Role</th>
+                              <th scope="col">CreatedAt</th>
+                              <th scope="col">Détails</th>
+                            </tr>
+                          </thead>
+                          <tbody  *ngFor="let user of filteredData">
+                            <tr>
+                              <th>
+                                  <div class="media-body">
+                                    <span class="mb-3 text-sm">{{user.email}}</span>
+                                  </div>
+                                
+                              </th>
+                              <td>
+                                {{user.fname}} 
+                              </td>
+                              <td>
+                                {{user.lname}} 
+                              </td>
+                              <td>
+                                <span class="badge badge-dot mr-4">
+                                  <i class="{{user.enabled ? 'bg-success' : 'bg-warning'}}"></i>
+                                   {{user.enabled ? 'enabled' : 'disabled'}}
+                                </span>
+                              </td>
+                              <td>
+                                {{user.role.roleName}}
+                              </td>
+                              <td>
+                               {{user.createdAt | date: 'dd-MM-yyyy'}}
+                              </td>
+                              <td class="text-right">
+                                <div ngbDropdown placement="bottom-right">
+                                  <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </a>
+                                  <div ngbDropdownMenu ngbDrop class=" dropdown-menu-right dropdown-menu-arrow">
+                                    <a class="dropdown-item" href="javascript:void(0)" (click)="openModalUpdateUser(user.idUser)" data-toggle="modal" data-target="#exampleModalUpdateUser">Update User</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" (click)="deleteUser(user.idUser)">Delete User</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" (click)="desActiverUser(user.idUser)">{{user.enabled ? 'Disable Account' : 'Enable Account'}}</a>
+                                    
+                                 
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                         
+                           
+                          </tbody>
+                        </table>
+                      </div>
+            
+            
+            
+                      <div class="card-footer py-4">
+                        <nav aria-label="...">
+                          <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item disabled">
+                              <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                                <i class="fas fa-angle-left"></i>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                            </li>
+                            <li class="page-item active">
+                              <a class="page-link" href="javascript:void(0)">1</a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" href="javascript:void(0)">2 <span class="sr-only"></span></a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                            <li class="page-item">
+                              <a class="page-link" href="javascript:void(0)">
+                                <i class="fas fa-angle-right"></i>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="activeTab == 'Role Management'" class="w-100">
+                <app-gestionrole (tabUpdated)="onTabUpdated($event)"></app-gestionrole>
+              </div>
+              <div *ngIf="activeTab == 'Privilege Management'" class="w-100">
+              <app-gestionprivilege></app-gestionprivilege>
+              </div>
+            </div>
+            <div class="card-body"></div>
+            <div class="card-footer py-4"></div>
+        </div>
+    </div>
+    
+    </div>
+  </div>
+<script src="https://unpkg.com/@popperjs/core@2.10.2/dist/bundle.min.js"></script>
+<script src="https://unpkg.com/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+
+

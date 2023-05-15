@@ -1,0 +1,19 @@
+<p>appeloffre-av works!</p>
+ahla
+soulaima
+<div>
+  <label for="id1">ID du devis fournisseur :</label>
+  <input type="number" [(ngModel)]="id1" name="id1" id="id1">
+
+  <label for="idA">ID de l'article :</label>
+  <input type="number" [(ngModel)]="idA" name="idA" id="idA">
+
+  <label for="pourcentageRemise">Pourcentage de remise :</label>
+  <input type="number" [(ngModel)]="pourcentageRemise" name="pourcentageRemise" id="pourcentageRemise">
+
+  <button (click)="calculerRemise()" class="btn btn-danger">Calculer</button>
+</div>
+
+<div *ngIf="Ptotal">
+  Le prix de l'article après remise est de : {{ Ptotal }} €
+</div>

@@ -1,0 +1,91 @@
+
+
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" class="text-center">liste des devis </h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">ptotal</th>
+                <th scope="col">PTSansRemise</th>
+
+                <th scope="col">commentaire</th>
+                <th scope="col">disponibilite</th>
+
+
+              </tr>
+            </thead>
+            <tbody  *ngFor="let devis of devisFournisseur">
+              <tr>
+
+
+                <td>
+                  {{devis.ptotal}}
+                </td>
+                <td>
+                  {{devis.PTSansRemise}}
+                </td>
+
+                <td>
+                  {{devis.commentaire}}
+                </td>
+                <td>
+                  {{devis.disponible}}
+                </td>
+
+<td>
+                <!-- Button trigger modal -->
+
+<button (click)="detail(devis.idDevisFourniseur)" class="btn btn-primary">Detail</button>
+<button (click)="addOffre(devis.idDevisFourniseur)" class="btn btn-primary">accepter</button>
+<button (click)="calcul(devis.idDevisFourniseur)" class="btn btn-primary">calculer Remise</button>
+<button (click)="supprimer(devis.idDevisFourniseur)" class="btn btn-primary">supprimer devis</button>
+
+
+</td>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+              </tr>
+
+
+
+
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,114 @@
+
+<div class="table-responsive">
+  <table class="table table-hover table-striped table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Description de l'offre</th>
+        <th scope="col">Date de création de la commande</th>
+        <th scope="col">Prix total hors taxe</th>
+        <th scope="col">Prix total avec taxe</th>
+        <th scope="col">État</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let commande of listeCommande">
+        <td>{{ commande.offre.commentaire }}</td>
+        <td>{{ commande.creationCommande | date }}</td>
+        <td>{{ commande.prixTotalHorsTaxe }}</td>
+        <td>
+          <div *ngIf="commande.prixTotalAvecTaxe ==0" >-</div>
+          <div *ngIf="commande.prixTotalAvecTaxe != 0" > {{ commande.prixTotalAvecTaxe  }}</div>
+        </td>
+        <td>
+          <span class="badge badge-pill badge-{{commande.etatCommande === 4 ? 'danger' : commande.etatCommande === 2 ? 'success' : commande.etatCommande === 1 ? 'info' : 'warning' }}">{{commande.etatCommande === 4 ? 'Annulée' : commande.etatCommande === 2 ? 'Payée' : commande.etatCommande === 1 ? 'Facturée' : 'En cours de Facturation' }}</span>
+        </td>
+        <td>
+          <input type="checkbox" [(ngModel)]="commande.selected" *ngIf="commande.etatCommande === 1" class="mr-2">
+          <button *ngIf="commande.etatCommande === 2" class="btn btn-sm btn-primary" (click)="telechargerPDF(commande.facture.idFacture)"><i class="fas fa-file-pdf"></i> Télécharger Facture</button>
+        </td>
+
+      </tr>
+      <tr *ngIf="listeCommande.length === 0">
+        <td colspan="7" class="text-center">Aucune commande trouvée</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<button type="button" class="btn btn-success" (click)="onPayer()">Payer les commandes sélectionnées</button>
+
+<!-- Modal de paiement -->
+<div class="modal fade" id="modalPaiement" tabindex="-1" role="dialog" aria-labelledby="modalPaiementLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalPaiementLabel">Payer les commandes sélectionnées</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+             <a class="nav-link active" id="visa-tab" data-toggle="tab" href="#visa" role="tab" aria-controls="visa" aria-selected="true">
+              <img src="https://i.imgur.com/sB4jftM.png" width="80"> </a>
+            </li>
+            </ul>
+            <br>
+        <div class="row">
+          <div class="col-md-6">
+            <!-- Formulaire de paiement -->
+            <form>
+              <div class="inputbox">
+                 <input type="text" name="name" min="1" max="999" class="form-control"   id="numeroCarte" required="required">
+                <span>Card Number</span>
+                 <i class="fa fa-eye"></i>
+                </div>
+
+              <div class="mb-3">
+                <label for="dateExpiration" class="form-label">Date d'expiration</label>
+                <input type="month" class="form-control" id="dateExpiration" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Adresse email</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+
+            <!-- Tableau des commandes sélectionnées -->
+            <h6 class="mb-3">Commandes sélectionnées :</h6>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Description de l'offre</th>
+                  <!-- <th>Prix total hors taxe</th>-->
+                  <!-- <th>Prix total avec taxe</th>-->
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let commande of listeCommande" [ngClass]="{'table-success': commande.selected}">
+                  <td>{{ commande.offre.commentaire }}</td>
+                 <!-- <td>{{ commande.prixTotalHorsTaxe }}</td>-->
+                 <!-- <td>{{ commande.prixTotalAvecTaxe }}</td>-->
+                </tr>
+              </tbody>
+            </table>
+
+               <!-- Résumé de paiement -->
+               <div class="border rounded p-3 mb-3">
+                <h6 class="mb-3">Résumé de paiement :</h6>
+                <p><strong>Total hors taxe :</strong> {{ totalHorsTaxe }}</p>
+                <p><strong>Charge & taxe :</strong> {{ tva }}</p>
+                <p><strong>Total à payer :</strong> {{ totalAPayer }}</p>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="submit" class="btn btn-primary" (click)="onPayerr()">Payer</button>
+      </div>
+    </div>
+  </div>
+</div>

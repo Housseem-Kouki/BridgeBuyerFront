@@ -1,0 +1,33 @@
+<div class="modal" [class]="modalNewBonReception  ? 'open' :'' " >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ajouter un bon de réception</h5>
+        <button type="button" class="btn btn-blue" (click)="close()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulaire d'ajout -->
+        <form >
+          <div class="form-group">
+
+          <div class="form-group">
+            <label>Quantité à refusee</label>
+            <input type="number" class="form-control" [(ngModel)]="brt.quantiteRefusee" name="quantiteRefusee" required>
+          </div>
+          <div class="form-group">
+            <label>Commentaire</label>
+            <input type="text" class="form-control" [(ngModel)]="brt.commentaire" name="commentaire" required>
+          </div>
+          <div class="form-group">
+            <label>Archive</label>
+            <input type="checkbox" class="form-control" [(ngModel)]="brt.archive" name="archive">
+          </div>
+          <button type="button" class="btn btn-primary" (click)="addBonRetour(brt)">Enregistrer</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>

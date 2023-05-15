@@ -1,0 +1,31 @@
+<h1>Corbeille des factures avoirs</h1>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>idFactureAvoir</th>
+        <th>montantTotal</th>
+        <th>archive</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody *ngFor="let f of factureAvoirs">
+      <tr *ngIf="f.archive">
+        <td>{{ f.idFactureAvoir }}</td>
+        <td>{{ f.montantTotal }}</td>
+        <td>{{ f.archive }}</td>
+        <td>Actions à définir</td>
+        <td>
+          <button
+          (click)="restoreLivraison(f.idFactureAvoir)"
+          class="btn btn-secondary"
+          style="margin-left: 10px"
+          >
+          Restaure
+          </button>
+          </td>
+          </tr>
+          </tbody>
+          </table>
+          </div>

@@ -1,0 +1,23 @@
+.circle-step {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: white;
+  font-weight: bold;
+  margin: 0 15px;
+}
+
+.circle-step-active {
+  background-color: #007bff;
+}
+
+.step-line {
+  width: 50px;
+  height: 3px;
+  background-color: #ccc;
+}
+
+.step-line-active {
+  background-color: #007bff; // Change this to the desired active color
+}

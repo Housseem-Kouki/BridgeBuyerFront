@@ -1,0 +1,64 @@
+
+<div class="table-responsive">
+  <table datatable class="table table-striped">
+    <thead>
+      <tr>
+        <th>Description de l'offre</th>
+        <th>Date de création de la commande</th>
+        <th>Prix total hors taxe</th>
+        <th>Prix total avec taxe</th>
+        <th>État</th>
+        <th>Télécharger Facture</th>
+        <th>Créer Bon de Livraison</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let commande of listeCommande">
+        <td>{{ commande.offre.commentaire }}</td>
+        <td>{{ commande.creationCommande | date }}</td>
+        <td>{{ commande.prixTotalHorsTaxe }}</td>
+        <td>{{ commande.prixTotalAvecTaxe }}</td>
+        <td>
+          <span *ngIf="commande.etatCommande == 4" class="badge badge-danger">Annuler</span>
+          <span *ngIf="commande.etatCommande == 2" class="badge badge-success">Payer</span>
+          <span *ngIf="commande.etatCommande == 1" class="badge badge-info">Facturée</span>
+          <span *ngIf="commande.etatCommande == 0" class="badge badge-warning">En cours de Facturation</span>
+        </td>
+        <td>
+          <button *ngIf="commande.etatCommande == 2" class="btn btn-primary btn-sm" (click)="telechargerPDF(commande.facture.idFacture)">
+            <i class="fas fa-download"></i> Télécharger
+          </button>
+        </td>
+        <td>
+          <button *ngIf="commande.etatCommande == 2" class="btn btn-primary btn-sm" (click)="creerBonDeLivraison(commande.idCommande)">
+            <i class="fas fa-truck"></i> Bon de Livraison
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="listeCommande.length == 0">
+        <td colspan="7" class="text-center">Aucune commande trouvée</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+        <div class="modal fade" id="modelFacture" tabindex="-1" role="dialog" aria-labelledby="modelFacture" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">ADD NEW USER</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+
+                </button>
+              </div>
+              <div class="modal-body">
+
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>

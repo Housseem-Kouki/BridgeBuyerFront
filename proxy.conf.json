@@ -1,0 +1,26 @@
+{
+  "/USER-SERVICE/*": {
+    "target": "http://localhost:9999",
+    "secure": false
+  },
+  "/COMMANDE-SERVICE/*": {
+    "target": "http://localhost:9999",
+    "secure": false
+  },
+  "/DEMANDEACHAT-SERVICE/*": {
+    "target": "http://localhost:9999",
+    "secure": false
+  },
+  
+    "/APPELOFFRE-SERVICE/*":{
+      "target": "http://localhost:9999",
+      "secure": false
+    
+  },
+  
+  "/LIVRAISION-SERVICE/*":{
+    "target": "http://localhost:9999",
+    "secure": false
+  
+}
+}

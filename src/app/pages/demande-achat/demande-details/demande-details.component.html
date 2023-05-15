@@ -1,0 +1,54 @@
+<div class="row py-5">
+  <h2>Etatdemandeachat :{{ demande?.etatdemandeachat }}</h2>
+  <h2>Budget : {{ demande?.budget }}</h2>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h2>Liste des articles</h2>
+  </div>
+  <div class="table-responsive-sm">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">nomarticle</th>
+          <th scope="col">prixestime</th>
+          <th scope="col">quantite</th>
+          <th scope="col">prixestimeAvecRemise</th>
+          <th scope="col">Nature</th>
+          <th scope="col">Unite</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let article of demande.articles; index as i">
+          <tr>
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ article.nomarticle }}</td>
+            <td>{{ article.prixestime | number }}</td>
+            <td>{{ article.quantite }}</td>
+            <td>{{ article.prixestimeAvecRemise | number }}</td>
+            <td>{{ article?.uniteArticle?.nomanature }}</td>
+            <td>{{ article?.natureArticle?.nomunite }}</td>
+            <td>
+              <button class="btn btn-light" (click)="toggleComments(article)">
+                <i class="fas fa-comment"></i>
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="selectedArticle === article">
+            <td colspan="8">
+              <div class="comments">
+                <h4>Comments:</h4>
+                <ul>
+                  <li *ngFor="let comment of article.comments">
+                    {{ comment.content }}
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
